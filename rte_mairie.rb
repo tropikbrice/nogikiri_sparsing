@@ -28,17 +28,19 @@ def get_the_email_of_a_townhal_from_its_webpage(page_url)
 	# tab.each_index.select{|i| tab[i] == '@'}
 
 	#puts email
-	puts "----- avec xpath-----"
+	# puts "----- avec xpath-----"
 	email2 = page.xpath('//td[@class="style27"]/p[@class="Style22"]')
-	binding.pry
 
+	# puts toto=email2.select{ |x| x.text.include?("@")}
 
-	#puts email2
-	puts "-_______________________-"
+	#solution un peu stylee !! fier de moi ! lol
+	# email2=email2.text.gsub("\u00A0", "|").split('|').select{ |x| x.include?("@")}[0]
+	#encore optimisee
+	email2 = email2.text.split("\u00A0").select{ |x| x.include?("@")}[0]
 
 	#binding.pry
 end
 
 page_url = "http://annuaire-des-mairies.com/95/vaureal.html"
 
-get_the_email_of_a_townhal_from_its_webpage(page_url)
+puts get_the_email_of_a_townhal_from_its_webpage(page_url)
