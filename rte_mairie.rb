@@ -35,8 +35,12 @@ def get_the_email_of_a_townhal_from_its_webpage(page_url)
 
 	#solution un peu stylee !! fier de moi ! lol
 	# email2=email2.text.gsub("\u00A0", "|").split('|').select{ |x| x.include?("@")}[0]
+	##################
 	#encore optimisee
-	email2 = email2.text.split("\u00A0").select{ |x| x.include?("@")}[0]
+	#email2 = email2.text.split("\u00A0").select{ |x| x.include?("@")}[0]
+	########
+	#ou :
+	email2 = email2.text.split("\u00A0")[email2.text.split("\u00A0").find_index{|x| x.include?("@")}]
 
 	#binding.pry
 end
@@ -44,3 +48,4 @@ end
 page_url = "http://annuaire-des-mairies.com/95/vaureal.html"
 
 puts get_the_email_of_a_townhal_from_its_webpage(page_url)
+
