@@ -37,12 +37,18 @@ def get_the_email_of_a_townhal_from_its_webpage(page_url)
 	# email2=email2.text.gsub("\u00A0", "|").split('|').select{ |x| x.include?("@")}[0]
 	##################
 	#encore optimisee
-	email2 = email2.text.split("\u00A0").select{ |x| x.include?("@")}[0] unless email2.text.split("\u00A0").select{ |x| x.include?("@")}[0].nil? 
+	# email2 = email2.text.split("\u00A0").select{ |x| x.include?("@")}[0] unless email2.text.split("\u00A0").select{ |x| x.include?("@")}[0].nil? 
 	########
 	#ou :
 
-	#afin de gerer les adresses vides on fait un || "" pour le retour de find_index
-	#return email2.text.split("\u00A0")[email2.text.split("\u00A0").find_index{|x| x.include?("@")} ]
+	#afin de gerer les index des adresses vides on fait un ||= "" pour le retour de find_index
+	index_email = email2.text.split("\u00A0").find_index{|x| x.include?("@")}
+	index_email ||= 0
+
+	email3= email2.text.split("\u00A0")[index_email ]
+
+	return email3
+
 	#essayer avec || "" mais pas reussi
 
 	#binding.pry
@@ -71,8 +77,9 @@ def get_all_the_urls_of_val_doise_townhalls(page_url)
 end
 
 page_url = "http://annuaire-des-mairies.com/val-d-oise.html"
+#page_url ="http://annuaire-des-mairies.com/95/chatenay-en-france.html"
 
-tt= get_all_the_urls_of_val_doise_townhalls(page_url)
+#puts get_the_email_of_a_townhal_from_its_webpage(page_url)
 
 townhall_list = []
 #
@@ -80,7 +87,7 @@ get_all_the_urls_of_val_doise_townhalls(page_url).each do |x|
 	#il y avait une erreur de mail non renseigne , vu grace aux instructions ci dessous
 	#donc on doit traiter les emails vides : ok fait ds la def de la fonction cidessus
 	# puts "--------"
-	# puts x[:url]
+	#puts x[:url]
 
 	email_ville=get_the_email_of_a_townhal_from_its_webpage( x[:url])
 	#puts x[:url]
